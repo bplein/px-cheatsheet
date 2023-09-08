@@ -14,14 +14,15 @@ for cm in $(kubectl -n kube-system get cm | grep px | awk '{print $1}'); do kube
 for cm in $(kubectl -n kube-system get cm | grep stork | awk '{print $1}'); do kubectl -n kube-system delete cm $cm;done
 kubectl -n kube-system delete cm vsphere-ds-lock
 ```
-Patching the storagecontroller 
+Other useful patches. Start with the setting the namespace and STC and then choose the other patches individually.
 
 ```
 # Get the namespace where portworx is installed.
 export pxnamespace=$(kubectl get stc -A | grep -v NAMESPACE | awk '{print $1}')
 # Get the stc resource.
 export STC=`kubectl -n $pxnamespace get stc | grep -v NAME | cut -f1 -d' '`
-
+```
+```
 # Various useful patches
 
 # Enable telemetry
